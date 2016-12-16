@@ -69,6 +69,8 @@ static public ResultSet r;
         Ultimo = new javax.swing.JButton();
         Nuevo = new javax.swing.JButton();
         Modificar = new javax.swing.JButton();
+        Aceptar = new javax.swing.JButton();
+        Cancelar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -195,8 +197,32 @@ static public ResultSet r;
         });
 
         Nuevo.setText("Nuevo");
+        Nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NuevoActionPerformed(evt);
+            }
+        });
 
         Modificar.setText("Modificar");
+        Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarActionPerformed(evt);
+            }
+        });
+
+        Aceptar.setText("Aceptar");
+        Aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AceptarActionPerformed(evt);
+            }
+        });
+
+        Cancelar.setText("Cancelar");
+        Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -242,6 +268,12 @@ static public ResultSet r;
                         .addComponent(Ultimo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Anterior, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(23, 23, 23))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addComponent(Aceptar)
+                .addGap(84, 84, 84)
+                .addComponent(Cancelar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,8 +284,8 @@ static public ResultSet r;
                     .addComponent(NIF)
                     .addComponent(Primero)
                     .addComponent(Anterior)
-                    .addComponent(nif))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(nif, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NOMBRE)
                     .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -287,7 +319,11 @@ static public ResultSet r;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TELEFONO)
                     .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(68, 68, 68))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Aceptar)
+                    .addComponent(Cancelar))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -370,6 +406,104 @@ static public ResultSet r;
         // TODO add your handling code here:
     }//GEN-LAST:event_telefonoActionPerformed
 
+    private void NuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoActionPerformed
+Primero.setVisible(false);
+Anterior.setVisible(false);
+Siguiente.setVisible(false);
+Ultimo.setVisible(false);
+Nuevo.setVisible(false);
+Modificar.setVisible(false);
+Aceptar.setVisible(true);
+Cancelar.setVisible(true);
+nif.setEditable(true);
+nif.setText("");
+nombre.setText("");
+direccion.setText("");
+poblacion.setText("");
+provincia.setText("");
+telefono.setText("");
+    }//GEN-LAST:event_NuevoActionPerformed
+
+    private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
+try {
+String vnif, vnombre, vdireccion, vpoblacion, vprovincia, vtelefono;
+vnif = nif.getText();
+vnombre = nombre.getText();
+vdireccion = direccion.getText();
+vpoblacion = poblacion.getText();
+vprovincia = provincia.getText();
+vtelefono = telefono.getText();
+String url = "jdbc:mysql://localhost:3306/bases";
+String user = "root";
+String pass = "";
+Connection connection = DriverManager.getConnection(url, user,pass);
+Statement s = connection.createStatement();
+String query = "insert into clientes values ('" + vnif + "','" + vnombre + "','" + vdireccion + "','" + vpoblacion + "','" +
+vprovincia + "','" + vtelefono + "')";
+int resultado = s.executeUpdate(query);
+nif.setEditable(false);
+Primero.setVisible(false);
+Anterior.setVisible(true);
+Siguiente.setVisible(true);
+Ultimo.setVisible(true);
+Nuevo.setVisible(true);
+Modificar.setVisible(true);
+Aceptar.setVisible(false);
+Cancelar.setVisible(false);
+r.refreshRow();
+r.last();
+} catch (SQLException ex) {
+Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+}
+    }//GEN-LAST:event_AceptarActionPerformed
+
+    private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
+try {
+String vnif, vnombre, vdireccion, vpoblacion, vprovincia, vtelefono;
+vnif = nif.getText();
+vnombre = nombre.getText();
+vdireccion = direccion.getText();
+vpoblacion = poblacion.getText();
+vprovincia = provincia.getText();
+vtelefono = telefono.getText();
+String url = "jdbc:mysql://localhost:3306/bases";
+String user = "root";
+String pass = "";
+Connection connection = DriverManager.getConnection(url, user,pass);
+Statement s = connection.createStatement();
+String query = "update clientes set NOMBRE='" + vnombre + "', DIRECCION='" + vdireccion + "',POBLACION='" + vpoblacion + "', PROVINCIA='" + vprovincia + "', TELEFONO='" + vtelefono + "' WHERE NIF='" +
+vnif +"'";
+int resultado = s.executeUpdate(query);
+r.refreshRow();
+} catch (SQLException ex) {
+Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+}
+    }//GEN-LAST:event_ModificarActionPerformed
+
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+try {
+nif.setEditable(true);
+Primero.setVisible(true);
+Anterior.setVisible(true);
+Siguiente.setVisible(true);
+Ultimo.setVisible(true);
+Nuevo.setVisible(true);
+Modificar.setVisible(true);
+Aceptar.setVisible(false);
+Cancelar.setVisible(false);
+r.refreshRow();
+r.last();
+nif.setText(r.getString("NIF"));
+nombre.setText(r.getString("NOMBRE"));
+direccion.setText(r.getString("DIRECCION"));
+poblacion.setText(r.getString("POBLACION"));
+provincia.setText(r.getString("PROVINCIA"));
+telefono.setText(r.getString("TELEFONO"));
+} catch (SQLException ex) {
+Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+}
+    }//GEN-LAST:event_CancelarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -410,7 +544,9 @@ static public ResultSet r;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Aceptar;
     private javax.swing.JButton Anterior;
+    private javax.swing.JButton Cancelar;
     private javax.swing.JLabel DIRECCION;
     private javax.swing.JButton Modificar;
     private javax.swing.JLabel NIF;
@@ -436,4 +572,10 @@ static public ResultSet r;
     private javax.swing.JTextField provincia;
     private javax.swing.JTextField telefono;
     // End of variables declaration//GEN-END:variables
+
+    private static class Clientes {
+
+        public Clientes() {
+        }
+    }
 }

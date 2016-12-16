@@ -19,13 +19,7 @@ public class BaseDeDatosEjercicio01 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        clientes cli = null;
-        try {
-            cli = new clientes();
-        } catch (SQLException ex) {
-            Logger.getLogger(BaseDeDatosEjercicio01.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        cli.setVisible(true);
-    }
-    
+           Menu men = new Menu();
+           men.setVisible(true);
+    }   
 }

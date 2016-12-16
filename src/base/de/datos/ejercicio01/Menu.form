@@ -78,6 +78,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="articulos"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="articulosActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

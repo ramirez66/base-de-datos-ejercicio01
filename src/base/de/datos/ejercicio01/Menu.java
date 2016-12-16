@@ -55,6 +55,11 @@ public class Menu extends javax.swing.JFrame {
 
         articulos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         articulos.setText("articulos");
+        articulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                articulosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,6 +106,15 @@ public class Menu extends javax.swing.JFrame {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_fabricantesActionPerformed
+
+    private void articulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_articulosActionPerformed
+ try {
+        articulos art = new articulos();
+        art.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_articulosActionPerformed
 
     /**
      * @param args the command line arguments
