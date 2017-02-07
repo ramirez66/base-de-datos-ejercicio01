@@ -11,12 +11,14 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author FranS
+ * @author Erick Ramirez Churata
+ * @version 3.0 Febrero 2017
  */
 public class BaseDeDatosEjercicio01 {
 
     /**
-     * @param args the command line arguments
+     * muestra el programa
+     * @param args Los argumentos de la línea de comandos
      */
     public static void main(String[] args) {
            Menu men = new Menu();

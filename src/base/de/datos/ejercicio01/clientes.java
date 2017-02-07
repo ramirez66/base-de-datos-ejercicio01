@@ -12,19 +12,35 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.swing.JOptionPane;
+/**
+ *clase clientes contiene informacion de clientes
+ * @author Erick Ramirez Churata
+ * @version 3.0 Febrero 2017
+ */
 public class clientes extends javax.swing.JFrame {
-static public ResultSet r;
- 
+/**
+ * variable que crea y guarda la consulta
+ */
+    static public ResultSet r;
+/**
+ * hace invisible los botones de aceptar y cancelar
+ * @throws SQLException excepción de un tipo especifico o general sobre los
+ * errores en la conexion a la base de datos
+ */
     public clientes() throws SQLException {
         initComponents();
+        Aceptar.setVisible(false);
+        Cancelar.setVisible(false);
         String url = "jdbc:mysql://localhost:3306/base de datos";
         String user = "root";
         String pass = "";
-        Connection connection = DriverManager.getConnection(url,user,pass);
-        
-        Statement s = connection.createStatement();
-        String query ="select * from clientes";
+        Connection connection = DriverManager.getConnection(url, user, pass);
+/**
+ * Una conexión con una base de datos específica
+ */
+        Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        String query = "select * from clientes";
         r = s.executeQuery(query);
         r.first();
         nif.setText(r.getString("NIF"));
@@ -50,6 +66,9 @@ static public ResultSet r;
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         NIF = new javax.swing.JLabel();
         nif = new javax.swing.JTextField();
         NOMBRE = new javax.swing.JLabel();
@@ -71,6 +90,8 @@ static public ResultSet r;
         Modificar = new javax.swing.JButton();
         Aceptar = new javax.swing.JButton();
         Cancelar = new javax.swing.JButton();
+        Borrar = new javax.swing.JButton();
+        Volver = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -110,6 +131,12 @@ static public ResultSet r;
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 36, Short.MAX_VALUE)
         );
+
+        jButton1.setText("jButton1");
+
+        jButton2.setText("jButton2");
+
+        jButton3.setText("jButton3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -224,105 +251,131 @@ static public ResultSet r;
             }
         });
 
+        Borrar.setText("Borrar");
+        Borrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BorrarActionPerformed(evt);
+            }
+        });
+
+        Volver.setText("Volver");
+        Volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(NOMBRE)
+                            .addComponent(NIF, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DIRECCION))
+                        .addGap(67, 67, 67)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                            .addComponent(nif)
+                            .addComponent(direccion)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(POBLACION)
+                            .addComponent(PROVINCIA)
+                            .addComponent(TELEFONO))
+                        .addGap(63, 63, 63)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Aceptar)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(telefono, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                                .addComponent(provincia)
+                                .addComponent(poblacion)))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(NOMBRE)
-                                    .addComponent(NIF, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(DIRECCION))
-                                .addGap(67, 67, 67)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-                                    .addComponent(nif)
-                                    .addComponent(direccion)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(POBLACION)
-                                    .addComponent(PROVINCIA)
-                                    .addComponent(TELEFONO))
-                                .addGap(63, 63, 63)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(telefono)
-                                    .addComponent(provincia)
-                                    .addComponent(poblacion))))
                         .addGap(59, 59, 59)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Siguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Primero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Modificar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(Ultimo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Anterior, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(23, 23, 23))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(Aceptar)
-                .addGap(84, 84, 84)
-                .addComponent(Cancelar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(Primero, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                            .addComponent(Nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Anterior, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Volver, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                            .addComponent(Borrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(77, 77, 77))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(218, 218, 218)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Cancelar)
+                        .addGap(269, 269, 269))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Ultimo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Siguiente)
+                            .addComponent(Modificar))
+                        .addGap(27, 27, 27))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel7)
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NIF)
-                    .addComponent(Primero)
-                    .addComponent(Anterior)
-                    .addComponent(nif, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nif, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(NIF))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Primero)
+                            .addComponent(Siguiente))
+                        .addGap(2, 2, 2)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NOMBRE)
                     .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(DIRECCION)
-                            .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Siguiente)
-                            .addComponent(Ultimo))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DIRECCION)
+                    .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Ultimo)
+                    .addComponent(Anterior))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(POBLACION)
-                            .addComponent(poblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(poblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PROVINCIA)
+                            .addComponent(provincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Nuevo)
                             .addComponent(Modificar))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PROVINCIA)
-                    .addComponent(provincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TELEFONO)
-                    .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Borrar))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Aceptar)
-                    .addComponent(Cancelar))
+                    .addComponent(Cancelar)
+                    .addComponent(Volver))
                 .addGap(19, 19, 19))
         );
 
@@ -330,68 +383,80 @@ static public ResultSet r;
     }// </editor-fold>//GEN-END:initComponents
 
     private void PrimeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrimeroActionPerformed
-    try {
-        if (r.first()){
-        nif.setText(r.getString("NIF"));
-        nombre.setText(r.getString("NOMBRE"));
-        direccion.setText(r.getString("DIRECCION"));
-        poblacion.setText(r.getString("POBLACION"));
-        provincia.setText(r.getString("PROVINCIA"));
-        telefono.setText(r.getString("TELEFONO"));
-    } 
-    }catch (SQLException ex) {
-        Logger.getLogger(clientes.class.getName()).log(Level.SEVERE, null, ex);
-    }
-      
+       /**
+        * boton para ir al primera accion de registro
+        */
+        try {
+            if (r.first()) {
+                nif.setText(r.getString("NIF"));
+                nombre.setText(r.getString("NOMBRE"));
+                direccion.setText(r.getString("DIRECCION"));
+                poblacion.setText(r.getString("POBLACION"));
+                provincia.setText(r.getString("PROVINCIA"));
+                telefono.setText(r.getString("TELEFONO"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_PrimeroActionPerformed
 
     private void AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnteriorActionPerformed
-    try {
-        if (r.previous()){
-        nif.setText(r.getString("NIF"));
-        nombre.setText(r.getString("NOMBRE"));
-        direccion.setText(r.getString("DIRECCION"));
-        poblacion.setText(r.getString("POBLACION"));
-        provincia.setText(r.getString("PROVINCIA"));
-        telefono.setText(r.getString("TELEFONO"));
-    } 
-    }catch (SQLException ex) {
-        Logger.getLogger(clientes.class.getName()).log(Level.SEVERE, null, ex);
-    }
+       /**
+        * boton para ir al anterior accion de registro
+        */
+        try {
+            if (r.previous()) {
+                nif.setText(r.getString("NIF"));
+                nombre.setText(r.getString("NOMBRE"));
+                direccion.setText(r.getString("DIRECCION"));
+                poblacion.setText(r.getString("POBLACION"));
+                provincia.setText(r.getString("PROVINCIA"));
+                telefono.setText(r.getString("TELEFONO"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_AnteriorActionPerformed
 
     private void SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiguienteActionPerformed
-    try {
-        if (r.next()){
-        nif.setText(r.getString("NIF"));
-        nombre.setText(r.getString("NOMBRE"));
-        direccion.setText(r.getString("DIRECCION"));
-        poblacion.setText(r.getString("POBLACION"));
-        provincia.setText(r.getString("PROVINCIA"));
-        telefono.setText(r.getString("TELEFONO"));
-    } 
-    }catch (SQLException ex) {
-        Logger.getLogger(clientes.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        /**
+         * boton para ir al siguiente accion de registro 
+         */
+        try {
+            if (r.next()) {
+                nif.setText(r.getString("NIF"));
+                nombre.setText(r.getString("NOMBRE"));
+                direccion.setText(r.getString("DIRECCION"));
+                poblacion.setText(r.getString("POBLACION"));
+                provincia.setText(r.getString("PROVINCIA"));
+                telefono.setText(r.getString("TELEFONO"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_SiguienteActionPerformed
 
     private void UltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UltimoActionPerformed
-    try {
-        if (r.last()){
-        nif.setText(r.getString("NIF"));
-        nombre.setText(r.getString("NOMBRE"));
-        direccion.setText(r.getString("DIRECCION"));
-        poblacion.setText(r.getString("POBLACION"));
-        provincia.setText(r.getString("PROVINCIA"));
+        /**
+         * boton para ir a la ultima accion de registro
+         */
+        try {
+            if (r.last()) {
+                nif.setText(r.getString("NIF"));
+                nombre.setText(r.getString("NOMBRE"));
+                direccion.setText(r.getString("DIRECCION"));
+                poblacion.setText(r.getString("POBLACION"));
+                provincia.setText(r.getString("PROVINCIA"));
         telefono.setText(r.getString("TELEFONO"));    }//GEN-LAST:event_UltimoActionPerformed
-    }catch (SQLException ex) {
-         Logger.getLogger(clientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
-    }
-        
+
     private void nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreActionPerformed
-          
+
     }//GEN-LAST:event_nombreActionPerformed
 
     private void nifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nifActionPerformed
@@ -407,102 +472,173 @@ static public ResultSet r;
     }//GEN-LAST:event_telefonoActionPerformed
 
     private void NuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoActionPerformed
-Primero.setVisible(false);
-Anterior.setVisible(false);
-Siguiente.setVisible(false);
-Ultimo.setVisible(false);
-Nuevo.setVisible(false);
-Modificar.setVisible(false);
-Aceptar.setVisible(true);
-Cancelar.setVisible(true);
-nif.setEditable(true);
-nif.setText("");
-nombre.setText("");
-direccion.setText("");
-poblacion.setText("");
-provincia.setText("");
-telefono.setText("");
+        /**
+         * boton nuevo para registrar una nueva base de datos 
+         */
+        Primero.setVisible(false);
+        Anterior.setVisible(false);
+        Siguiente.setVisible(false);
+        Ultimo.setVisible(false);
+        Nuevo.setVisible(false);
+        Modificar.setVisible(false);
+        Borrar.setVisible(false);
+        Volver.setVisible(false);
+        Aceptar.setVisible(true);
+        Cancelar.setVisible(true);
+        nif.setEditable(true);
+        nif.setText("");
+        nombre.setText("");
+        direccion.setText("");
+        poblacion.setText("");
+        provincia.setText("");
+        telefono.setText("");
     }//GEN-LAST:event_NuevoActionPerformed
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
-try {
-String vnif, vnombre, vdireccion, vpoblacion, vprovincia, vtelefono;
-vnif = nif.getText();
-vnombre = nombre.getText();
-vdireccion = direccion.getText();
-vpoblacion = poblacion.getText();
-vprovincia = provincia.getText();
-vtelefono = telefono.getText();
-String url = "jdbc:mysql://localhost:3306/bases";
-String user = "root";
-String pass = "";
-Connection connection = DriverManager.getConnection(url, user,pass);
-Statement s = connection.createStatement();
-String query = "insert into clientes values ('" + vnif + "','" + vnombre + "','" + vdireccion + "','" + vpoblacion + "','" +
-vprovincia + "','" + vtelefono + "')";
-int resultado = s.executeUpdate(query);
-nif.setEditable(false);
-Primero.setVisible(false);
-Anterior.setVisible(true);
-Siguiente.setVisible(true);
-Ultimo.setVisible(true);
-Nuevo.setVisible(true);
-Modificar.setVisible(true);
-Aceptar.setVisible(false);
-Cancelar.setVisible(false);
-r.refreshRow();
-r.last();
-} catch (SQLException ex) {
-Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
-}
+      /**
+       * boton para aceptar una accion 
+       */
+        try {
+            String vnif, vnombre, vdireccion, vpoblacion, vprovincia, vtelefono;
+            vnif = nif.getText();
+            vnombre = nombre.getText();
+            vdireccion = direccion.getText();
+            vpoblacion = poblacion.getText();
+            vprovincia = provincia.getText();
+            vtelefono = telefono.getText();
+            String url = "jdbc:mysql://localhost:3306/base de datos";
+            String user = "root";
+            String pass = "";
+            Connection connection = DriverManager.getConnection(url, user, pass);
+           /**
+            * Una conexión con una base de datos específica
+            */
+            Statement s = connection.createStatement();
+            String query = "insert into clientes values ('" + vnif + "','" + vnombre + "','" + vdireccion + "','" + vpoblacion + "','"
+                    + vprovincia + "','" + vtelefono + "')";
+            int resultado = s.executeUpdate(query);
+            nif.setEditable(true);
+            Primero.setVisible(true);
+            Anterior.setVisible(true);
+            Siguiente.setVisible(true);
+            Ultimo.setVisible(true);
+            Nuevo.setVisible(true);
+            Modificar.setVisible(true);
+            Borrar.setVisible(true);
+            Volver.setVisible(true);
+            Aceptar.setVisible(false);
+            Cancelar.setVisible(false);
+            r.refreshRow();
+            r.last();
+        } catch (SQLException ex) {
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_AceptarActionPerformed
 
     private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
-try {
-String vnif, vnombre, vdireccion, vpoblacion, vprovincia, vtelefono;
-vnif = nif.getText();
-vnombre = nombre.getText();
-vdireccion = direccion.getText();
-vpoblacion = poblacion.getText();
-vprovincia = provincia.getText();
-vtelefono = telefono.getText();
-String url = "jdbc:mysql://localhost:3306/bases";
-String user = "root";
-String pass = "";
-Connection connection = DriverManager.getConnection(url, user,pass);
-Statement s = connection.createStatement();
-String query = "update clientes set NOMBRE='" + vnombre + "', DIRECCION='" + vdireccion + "',POBLACION='" + vpoblacion + "', PROVINCIA='" + vprovincia + "', TELEFONO='" + vtelefono + "' WHERE NIF='" +
-vnif +"'";
-int resultado = s.executeUpdate(query);
-r.refreshRow();
-} catch (SQLException ex) {
-Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
-}
+        /**
+         * boton de modificar una accion
+         */
+        try {
+            String vnif, vnombre, vdireccion, vpoblacion, vprovincia, vtelefono;
+            vnif = nif.getText();
+            vnombre = nombre.getText();
+            vdireccion = direccion.getText();
+            vpoblacion = poblacion.getText();
+            vprovincia = provincia.getText();
+            vtelefono = telefono.getText();
+            String url = "jdbc:mysql://localhost:3306/base de datos";
+            String user = "root";
+            String pass = "";
+            Connection connection = DriverManager.getConnection(url, user, pass);
+            /**
+            * Una conexión con una base de datos específica
+            */
+            Statement s = connection.createStatement();
+            String query = "update clientes set NOMBRE='" + vnombre + "', DIRECCION='" + vdireccion + "',POBLACION='" + vpoblacion + "', PROVINCIA='" + vprovincia + "', TELEFONO='" + vtelefono + "' WHERE NIF='" + vnif + "'";
+            int resultado = s.executeUpdate(query);
+            r.refreshRow();
+        } catch (SQLException ex) {
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ModificarActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
-try {
-nif.setEditable(true);
-Primero.setVisible(true);
-Anterior.setVisible(true);
-Siguiente.setVisible(true);
-Ultimo.setVisible(true);
-Nuevo.setVisible(true);
-Modificar.setVisible(true);
-Aceptar.setVisible(false);
-Cancelar.setVisible(false);
-r.refreshRow();
-r.last();
-nif.setText(r.getString("NIF"));
-nombre.setText(r.getString("NOMBRE"));
-direccion.setText(r.getString("DIRECCION"));
-poblacion.setText(r.getString("POBLACION"));
-provincia.setText(r.getString("PROVINCIA"));
-telefono.setText(r.getString("TELEFONO"));
-} catch (SQLException ex) {
-Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
-}
+        /**
+         * boton para cancelar una accion
+         */
+        try {
+            nif.setEditable(true);
+            Primero.setVisible(true);
+            Anterior.setVisible(true);
+            Siguiente.setVisible(true);
+            Ultimo.setVisible(true);
+            Nuevo.setVisible(true);
+            Modificar.setVisible(true);
+            Borrar.setVisible(true);
+            Volver.setVisible(true);
+            Aceptar.setVisible(false);
+            Cancelar.setVisible(false);
+//r.refreshRow();
+            r.last();
+            nif.setText(r.getString("NIF"));
+            nombre.setText(r.getString("NOMBRE"));
+            direccion.setText(r.getString("DIRECCION"));
+            poblacion.setText(r.getString("POBLACION"));
+            provincia.setText(r.getString("PROVINCIA"));
+            telefono.setText(r.getString("TELEFONO"));
+        } catch (SQLException ex) {
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_CancelarActionPerformed
+
+    private void BorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarActionPerformed
+        /**
+         * boton para borrar una accion
+         */
+        try {
+            /**
+             * es un  panel de opcion para una  accion
+             */
+            int i = JOptionPane.showConfirmDialog(null, "El registro será eliminado ¿deseas cancelar el borrado?", "Confirmar borrado", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (i == 0); else {
+                String vcode;
+                vcode = nif.getText();
+                String url = "jdbc:mysql://localhost:3306/base de datos";
+                String user = "root";
+                String pass = "";
+                Connection connection = DriverManager.getConnection(url, user, pass);
+                /**
+            * Una conexión con una base de datos específica
+            */
+                Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                String query = "delete FROM clientes WHERE NIF='" + vcode + "'";
+                int resultado = s.executeUpdate(query);
+                String query2 = "select * from clientes";
+                r = s.executeQuery(query2);
+                r.first();
+                r.refreshRow();
+                nif.setText(r.getString("NIF"));
+                nombre.setText(r.getString("NOMBRE"));
+                direccion.setText(r.getString("DIRECCION"));
+                poblacion.setText(r.getString("POBLACION"));
+                provincia.setText(r.getString("PROVINCIA"));
+                telefono.setText(r.getString("TELEFONO"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BorrarActionPerformed
+
+    private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
+        /**
+         * boton volver paar ir al panel de menu
+         */
+        Menu cli = new Menu();
+        cli.setLocationRelativeTo(null);
+        this.setVisible(false);
+        cli.setVisible(false);
+    }//GEN-LAST:event_VolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -546,6 +682,7 @@ Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
     private javax.swing.JButton Anterior;
+    private javax.swing.JButton Borrar;
     private javax.swing.JButton Cancelar;
     private javax.swing.JLabel DIRECCION;
     private javax.swing.JButton Modificar;
@@ -558,7 +695,11 @@ Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
     private javax.swing.JButton Siguiente;
     private javax.swing.JLabel TELEFONO;
     private javax.swing.JButton Ultimo;
+    private javax.swing.JButton Volver;
     private javax.swing.JTextField direccion;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

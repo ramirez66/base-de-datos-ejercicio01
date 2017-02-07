@@ -13,19 +13,34 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.swing.JOptionPane;
+/**
+ *clase fabricantes contiene informacion de los fabricantes
+ * @author Erick Ramirez Churata
+ * @version 3.0 Febrero 2017
+ */
 public class fabricantes extends javax.swing.JFrame {
-
+/**
+ * variable que crea y guarda la consulta
+ */
     static public ResultSet r;
-
+/**
+ * hace invisible los botones de aceptar  y cancelar
+ * @throws SQLException excepción de un tipo especifico o general sobre los
+ * errores en la conexion a la base de datos
+ */
     public fabricantes() throws SQLException {
         initComponents();
+        Aceptar.setVisible(false);
+        Cancelar.setVisible(false);
         String url = "jdbc:mysql://localhost:3306/base de datos";
         String user = "root";
         String pass = "";
         Connection connection = DriverManager.getConnection(url, user, pass);
-
-        Statement s = connection.createStatement();
+ /**
+ * Una conexión con una base de datos específica
+ */
+        Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         String query = "select * from fabricantes";
         r = s.executeQuery(query);
         r.first();
@@ -60,6 +75,9 @@ public class fabricantes extends javax.swing.JFrame {
         Modificar = new javax.swing.JButton();
         Ultimo = new javax.swing.JButton();
         Aceptar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        Borrar = new javax.swing.JButton();
+        Volver = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -150,6 +168,24 @@ public class fabricantes extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel1.setText("FABRICANTES");
+
+        Borrar.setText("Borrar");
+        Borrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BorrarActionPerformed(evt);
+            }
+        });
+
+        Volver.setText("Volver");
+        Volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,24 +207,36 @@ public class fabricantes extends javax.swing.JFrame {
                 .addComponent(Cancelar)
                 .addGap(31, 31, 31))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Primero, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Siguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Modificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Anterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
-                .addComponent(Ultimo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Primero, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(Siguiente)
+                        .addGap(31, 31, 31)
+                        .addComponent(Anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(Ultimo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(218, 218, 218)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(Nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(Modificar)
+                        .addGap(36, 36, 36)
+                        .addComponent(Borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(Volver)))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(6, 6, 6)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(COD_FABRICANTE)
                     .addComponent(cod_fabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,8 +259,10 @@ public class fabricantes extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Nuevo)
-                    .addComponent(Modificar))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(Modificar)
+                    .addComponent(Borrar)
+                    .addComponent(Volver))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -231,6 +281,9 @@ public class fabricantes extends javax.swing.JFrame {
     }//GEN-LAST:event_paisActionPerformed
 
     private void PrimeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrimeroActionPerformed
+       /**
+        * boton para ir al primera accion de registro
+        */
         try {
             if (r.first()) {
                 cod_fabricante.setText(r.getString("COD_FABRICANTE"));
@@ -242,6 +295,9 @@ public class fabricantes extends javax.swing.JFrame {
         }
     }
     private void SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiguienteActionPerformed
+        /**
+         * boton para ir al siguiente accion de registro 
+         */
         try {
             if (r.next()) {
                 cod_fabricante.setText(r.getString("COD_FABRICANTE"));
@@ -253,6 +309,9 @@ public class fabricantes extends javax.swing.JFrame {
         }
     }
     private void AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnteriorActionPerformed
+        /**
+        * boton para ir al anterior accion de registro
+        */
         try {
             if (r.previous()) {
                 cod_fabricante.setText(r.getString("COD_FABRICANTE"));
@@ -264,6 +323,9 @@ public class fabricantes extends javax.swing.JFrame {
         }
     }
     private void UltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UltimoActionPerformed
+        /**
+         * boton para ir a la ultima accion de registro
+         */
         try {
             if (r.last()) {
                 cod_fabricante.setText(r.getString("COD_FABRICANTE"));
@@ -275,13 +337,17 @@ public class fabricantes extends javax.swing.JFrame {
         }
     }
     private void NuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoActionPerformed
-
+        /**
+         * boton nuevo para registrar una nueva base de datos 
+         */
         Primero.setVisible(false);
         Anterior.setVisible(false);
         Siguiente.setVisible(false);
         Ultimo.setVisible(false);
         Nuevo.setVisible(false);
         Modificar.setVisible(false);
+        Borrar.setVisible(false);
+        Volver.setVisible(false);
         Aceptar.setVisible(true);
         Cancelar.setVisible(true);
         cod_fabricante.setText("");
@@ -291,6 +357,9 @@ public class fabricantes extends javax.swing.JFrame {
     }//GEN-LAST:event_NuevoActionPerformed
 
     private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
+         /**
+         * boton de modificar una accion
+         */
         try {
             String vcod_fabricante, vnombre, vpais;
             vcod_fabricante = cod_fabricante.getText();
@@ -300,6 +369,9 @@ public class fabricantes extends javax.swing.JFrame {
             String user = "root";
             String pass = "";
             Connection connection = DriverManager.getConnection(url, user, pass);
+            /**
+            * Una conexión con una base de datos específica
+            */
             Statement s = connection.createStatement();
             String query = "update fabricantes set COD_FABRICANTE='" + vcod_fabricante + "', NOMBRE='" + vnombre + "', PAIS='" + vpais + "' WHERE COD_FABRICANTE='" + vcod_fabricante +"'";
             int resultado = s.executeUpdate(query);
@@ -310,6 +382,9 @@ public class fabricantes extends javax.swing.JFrame {
     }//GEN-LAST:event_ModificarActionPerformed
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
+       /**
+       * boton para aceptar una accion 
+       */
         try {
             String vcod_fabricante, vnombre, vpais;
             vcod_fabricante = cod_fabricante.getText();
@@ -319,7 +394,10 @@ public class fabricantes extends javax.swing.JFrame {
             String user = "root";
             String pass = "";
             Connection connection = DriverManager.getConnection(url, user, pass);
-            Statement s = connection.createStatement();
+            /**
+            * Una conexión con una base de datos específica
+            */
+            Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             String query = "insert into fabricantes values ('" + vcod_fabricante + "','" + vnombre + "','" + vpais + "')";
             int resultado = s.executeUpdate(query);
             Primero.setVisible(true);
@@ -328,11 +406,13 @@ public class fabricantes extends javax.swing.JFrame {
             Ultimo.setVisible(true);
             Nuevo.setVisible(true);
             Modificar.setVisible(true);
+            Borrar.setVisible(true);
+            Volver.setVisible(true);
             Aceptar.setVisible(false);
             Cancelar.setVisible(false);
             String query2 = "select * from fabricantes";
             r = s.executeQuery(query2);
-            //r.refreshRow();
+            r.refreshRow();
             r.first();
             cod_fabricante.setText(r.getString("COD_FABRICANTE"));
             nombre.setText(r.getString("NOMBRE"));
@@ -343,6 +423,9 @@ public class fabricantes extends javax.swing.JFrame {
     }//GEN-LAST:event_AceptarActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+        /**
+         * boton para cancelar una accion
+         */
         try {
             Primero.setVisible(true);
             Anterior.setVisible(true);
@@ -350,9 +433,11 @@ public class fabricantes extends javax.swing.JFrame {
             Ultimo.setVisible(true);
             Nuevo.setVisible(true);
             Modificar.setVisible(true);
+            Borrar.setVisible(true);
+            Volver.setVisible(true);
             Aceptar.setVisible(false);
             Cancelar.setVisible(false);
-            r.refreshRow();
+            //r.refreshRow();
             r.first();
             cod_fabricante.setText(r.getString("COD_FABRICANTE"));
             nombre.setText(r.getString("NOMBRE"));
@@ -361,6 +446,52 @@ public class fabricantes extends javax.swing.JFrame {
             Logger.getLogger(fabricantes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_CancelarActionPerformed
+
+    private void BorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarActionPerformed
+         /**
+         * boton para borrar una accion
+         */
+        try {
+            /**
+             * es un  panel de opcion para una  accion
+             */
+            int i= JOptionPane.showConfirmDialog(null, "El registro será eliminado ¿deseas cancelar el borrado?", "Confirmar borrado", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(i==0);
+        else{
+        String vcode;
+        vcode = cod_fabricante.getText();
+        String url = "jdbc:mysql://localhost:3306/base de datos";
+        String user = "root";
+        String pass = "";
+        Connection connection = DriverManager.getConnection(url, user, pass);
+           /**
+            * Una conexión con una base de datos específica
+            */
+        Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        String query = "delete FROM fabricantes WHERE COD_FABRICANTE='"+vcode+"'";
+        int resultado = s.executeUpdate(query);
+        String query2 = "select * from fabricantes";
+        r = s.executeQuery(query2);
+        r.first();
+        r.refreshRow();
+        cod_fabricante.setText(r.getString("COD_FABRICANTE"));
+        nombre.setText(r.getString("NOMBRE"));
+        pais.setText(r.getString("PAIS"));
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(fabricantes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BorrarActionPerformed
+
+    private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
+        /**
+         * boton volver paar ir al panel de menu
+         */
+        Menu fab = new Menu();
+        fab.setLocationRelativeTo (null);
+        this.setVisible(false);
+        fab.setVisible(false);
+    }//GEN-LAST:event_VolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,6 +534,7 @@ public class fabricantes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
     private javax.swing.JButton Anterior;
+    private javax.swing.JButton Borrar;
     private javax.swing.JLabel COD_FABRICANTE;
     private javax.swing.JButton Cancelar;
     private javax.swing.JButton Modificar;
@@ -412,9 +544,11 @@ public class fabricantes extends javax.swing.JFrame {
     private javax.swing.JButton Primero;
     private javax.swing.JButton Siguiente;
     private javax.swing.JButton Ultimo;
+    private javax.swing.JButton Volver;
     private javax.swing.JTextField cod_fabricante;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField pais;
     // End of variables declaration//GEN-END:variables

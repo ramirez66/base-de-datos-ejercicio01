@@ -10,18 +10,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author FranS
+ *clase menu panel de de cuatro botones 
+ * @author Erick Ramirez Churata
+ * @version 3.0 Febrero 2017
  */
 public class Menu extends javax.swing.JFrame {
 
     /**
-     * Creates new form Menu
+     * Crea un nuevo formulario de menu 
      */
     public Menu() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,6 +34,7 @@ public class Menu extends javax.swing.JFrame {
         clientes = new javax.swing.JButton();
         fabricantes = new javax.swing.JButton();
         articulos = new javax.swing.JButton();
+        pedidos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +62,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        pedidos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        pedidos.setText("pedidos");
+        pedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pedidosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,26 +79,31 @@ public class Menu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(clientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(fabricantes, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                    .addComponent(articulos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(articulos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(141, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(20, 20, 20)
                 .addComponent(clientes, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(29, 29, 29)
                 .addComponent(fabricantes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addGap(36, 36, 36)
                 .addComponent(articulos, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(pedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesActionPerformed
-
+/**
+ * boton de clientes para poder ir al panel de clientes
+ */
         try {
             clientes cli = new clientes();
             cli.setVisible(true);
@@ -99,6 +113,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesActionPerformed
 
     private void fabricantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fabricantesActionPerformed
+       /**
+        * boton de fabricantes para ir al panel de fabricantes
+        */
         try {
         fabricantes fab = new fabricantes();
         fab.setVisible(true);
@@ -108,7 +125,10 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_fabricantesActionPerformed
 
     private void articulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_articulosActionPerformed
- try {
+ /**
+  * boton articulos para ir al panel de articulos
+  */
+        try {
         articulos art = new articulos();
         art.setVisible(true);
         } catch (SQLException ex) {
@@ -116,8 +136,20 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_articulosActionPerformed
 
+    private void pedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedidosActionPerformed
+/**
+ * boton de pedidos para ir al panel de pedidos 
+ */
+        try {
+        pedidos ped = new pedidos();
+        ped.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_pedidosActionPerformed
+
     /**
-     * @param args the command line arguments
+     * @param args Los argumentos de la línea de comandos
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -143,7 +175,7 @@ public class Menu extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Crear y mostrar el formulario */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Menu().setVisible(true);
@@ -155,5 +187,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton articulos;
     private javax.swing.JButton clientes;
     private javax.swing.JButton fabricantes;
+    private javax.swing.JButton pedidos;
     // End of variables declaration//GEN-END:variables
 }
